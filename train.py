@@ -22,7 +22,8 @@ prefix = '/opt/ml/'
 
 input_path = prefix + 'input/data'
 output_path = os.path.join(prefix, 'output')
-model_path = os.path.join(prefix, 'model')
+#model_path = os.path.join(prefix, 'model')
+model_path="/workspace/Wav2Lip_aws/checkpoints"
 param_path = os.path.join(prefix, 'input/config/hyperparameters.json')
 
 # This algorithm has a single channel of input data called 'training'. Since we run in
