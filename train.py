@@ -31,7 +31,7 @@ syncnet_checkpoint_path="/workspace/Wav2Lip_aws/checkpoints/syncnet.path"
 # This algorithm has a two channels of input data called 'trainingand' and 'syncnet_checkpoint'. Since we run in
 # File mode, the input files are copied to the directory specified here.
 training_path = os.path.join(input_path, 'training')
-syncnet_checkpoint_path=os.path.join(input_path, 'syncnet_checkpoint')
+syncnet_checkpoint_path=os.path.join(input_path, 'syncnet_checkpoint/checkpoint_latest.pth')
 
 
 # The function to execute the training.
