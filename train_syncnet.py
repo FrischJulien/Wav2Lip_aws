@@ -38,7 +38,7 @@ syncnet_checkpoint_path=os.path.join(input_path, 'syncnet_checkpoint/checkpoint_
 def train():
     print('Starting the training.')
     try:
-        os.system("python3 wav2lip_train.py --data_root {} --checkpoint_dir {} --syncnet_checkpoint_path {}".format(training_path,model_path,syncnet_checkpoint_path))
+        os.system("python3 color_syncnet_train.py --data_root {} --checkpoint_dir {}".format(training_path,model_path))
         print('Training complete.')
     except Exception as e:
         # Write out an error file. This will be returned as the failureReason in the
