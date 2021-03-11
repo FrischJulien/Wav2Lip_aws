@@ -29,7 +29,6 @@ param_path = os.path.join(prefix, 'input/config/hyperparameters.json')
 syncnet_checkpoint_path="/workspace/Wav2Lip_aws/checkpoints/syncnet.path"
 
 # This algorithm has a two channels of input data called 'training' and 'syncnet_checkpoint'. Since we run in
-# File mode, the input files are copied to the directory specified here.
 training_path = os.path.join(input_path, 'training')
 syncnet_checkpoint_path=os.path.join(input_path, 'syncnet_checkpoint/checkpoint_latest.pth')
 
@@ -38,7 +37,7 @@ syncnet_checkpoint_path=os.path.join(input_path, 'syncnet_checkpoint/checkpoint_
 def train():
     print('Starting the training.')
     try:
-        os.system("python3 color_syncnet_train.py --data_root {} --checkpoint_dir {}".format(training_path,model_path))
+        os.system("python3 color_syncnet_train_pipe.py --data_root {} --checkpoint_dir {}".format(training_path,model_path))
         print('Training complete.')
     except Exception as e:
         # Write out an error file. This will be returned as the failureReason in the
