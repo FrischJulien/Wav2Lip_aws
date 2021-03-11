@@ -34,6 +34,33 @@ print('use_cuda: {}'.format(use_cuda))
 syncnet_T = 5
 syncnet_mel_step_size = 16
 
+def check_termination():
+    if terminated:
+        print('Exiting due to termination request')
+        sys.exit(0)
+
+
+def wait_till_fifo_exists(fname):
+    print('Wait till FIFO available: %s' % (fname))
+    while not os.path.exists(fname) and not terminated:
+        time.sleep(.1)
+    check_termination()
+
+
+def touch(fname):
+    open(fname, 'wa').close()
+
+
+def on_terminate(signum, frame):
+    print('caught termination signal, exiting gracefully...')
+    global terminated
+    terminated = True
+
+
+def trap_signal():
+    signal.signal(signal.SIGTERM, on_terminate)
+    signal.signal(signal.SIGINT, on_terminate)
+
 class Dataset(object):
     def __init__(self, split):
         self.all_videos = get_image_list(args.data_root, split)
