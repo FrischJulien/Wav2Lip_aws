@@ -25,7 +25,7 @@ parser.add_argument('--checkpoint_path', help='Resumed from this checkpoint', de
 
 args = parser.parse_args()
 
-
+terminated = False
 global_step = 0
 global_epoch = 0
 use_cuda = torch.cuda.is_available()
