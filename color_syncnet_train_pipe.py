@@ -25,41 +25,14 @@ parser.add_argument('--checkpoint_path', help='Resumed from this checkpoint', de
 
 args = parser.parse_args()
 
-terminated = False
 global_step = 0
 global_epoch = 0
 use_cuda = torch.cuda.is_available()
+terminated = False
 print('use_cuda: {}'.format(use_cuda))
 
 syncnet_T = 5
 syncnet_mel_step_size = 16
-
-def check_termination():
-    if terminated:
-        print('Exiting due to termination request')
-        sys.exit(0)
-
-
-def wait_till_fifo_exists(fname):
-    print('Wait till FIFO available: %s' % (fname))
-    while not os.path.exists(fname) and not terminated:
-        time.sleep(.1)
-    check_termination()
-
-
-def touch(fname):
-    open(fname, 'wa').close()
-
-
-def on_terminate(signum, frame):
-    print('caught termination signal, exiting gracefully...')
-    global terminated
-    terminated = True
-
-
-def trap_signal():
-    signal.signal(signal.SIGTERM, on_terminate)
-    signal.signal(signal.SIGINT, on_terminate)
 
 class Dataset(object):
     def __init__(self, split):
@@ -270,6 +243,36 @@ def load_checkpoint(path, model, optimizer, reset_optimizer=False):
     global_epoch = checkpoint["global_epoch"]
 
     return model
+
+def check_termination():
+    if terminated:
+        print('Exiting due to termination request')
+        sys.exit(0)
+
+
+def wait_till_fifo_exists(fname):
+    print('Wait till FIFO available: %s' % (fname))
+    while not os.path.exists(fname) and not terminated:
+        time.sleep(.1)
+    check_termination()
+
+
+def touch(fname):
+    open(fname, 'wa').close()
+
+
+def on_terminate(signum, frame):
+    print('caught termination signal, exiting gracefully...')
+    global terminated
+    terminated = True
+
+
+def trap_signal():
+    signal.signal(signal.SIGTERM, on_terminate)
+    signal.signal(signal.SIGINT, on_terminate)
+
+
+
 
 if __name__ == "__main__":
     checkpoint_dir = args.checkpoint_dir
