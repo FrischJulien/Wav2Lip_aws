@@ -141,6 +141,7 @@ def cosine_loss(a, v, y):
 def train(device, model, train_data_loader, test_data_loader, optimizer,
           checkpoint_dir=None, checkpoint_interval=None, nepochs=None):
 
+    print("start train")
     global global_step, global_epoch
     resumed_step = global_step
     
@@ -153,15 +154,17 @@ def train(device, model, train_data_loader, test_data_loader, optimizer,
     total_duration=0
     
     while global_epoch < nepochs:
+        print('global_epoch {} < nepochs {} '.format(global_epoch,nepochs))
         check_termination()
         epoch_bytes_read = 0
         # As per SageMaker Training spec, the FIFO's path will be based on
         # the channel name and the current epoch:
         fifo_path = '{0}/{1}_{2}'.format(args.data_root, 'training', global_epoch)
-
+        print('fifo_path : {} '.format(fifo_path))
         # Usually the fifo will already exist by the time we get here, but
         # to be safe we should wait to confirm:
         wait_till_fifo_exists(fifo_path)
+        print('fifo exists.')
         
         with open(fifo_path, 'rb', buffering=0) as fifo:
             print('opened fifo: %s' % fifo_path)
