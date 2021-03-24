@@ -32,7 +32,7 @@ syncnet_checkpoint_path="/workspace/Wav2Lip_aws/checkpoints/syncnet.path"
 # File mode, the input files are copied to the directory specified here.
 training_path = os.path.join(input_path, 'training')
 syncnet_checkpoint_path=os.path.join(input_path, 'syncnet_checkpoint/checkpoint_latest.pth')
-checkpoint_path = '/opt/ml/processing/workspace/lipsync_expert.pth'
+checkpoint_path = os.path.join(input_path, 'pretrainted/lipsync_expert.pth')
 
 
 # The function to execute the training.
