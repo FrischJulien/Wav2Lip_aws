@@ -267,7 +267,11 @@ if __name__ == "__main__":
     model = SyncNet().to(device)
     print('total trainable params {}'.format(sum(p.numel() for p in model.parameters() if p.requires_grad)))
 
+    #optimizer = optim.Adam([p for p in model.parameters() if p.requires_grad],
+    #                       lr=hparams.syncnet_lr)
+    #as per https://github.com/Rudrabha/Wav2Lip/issues/195
     optimizer = optim.Adam([p for p in model.parameters() if p.requires_grad],
+                           betas=(0.5,0.999),
                            lr=hparams.syncnet_lr)
 
     if checkpoint_path is not None:

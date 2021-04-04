@@ -298,8 +298,7 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
         global_epoch += 1
 
 def eval_model(test_data_loader, global_step, device, model, disc):
-    #eval_steps = 300
-    eval_steps = 3
+    eval_steps = 300
     print('Evaluating for {} steps'.format(eval_steps))
     running_sync_loss, running_l1_loss, running_disc_real_loss, running_disc_fake_loss, running_perceptual_loss = [], [], [], [], []
     while 1:
